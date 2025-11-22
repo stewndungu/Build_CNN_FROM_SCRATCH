@@ -3,34 +3,19 @@
 using namespace std;
 #include <vector>
 #include <iostream>
+#include <random>
 
 Vec add(const Vec& a, const Vec& b)
 {
-   int i=0;
-    int j=0;
-
+   
+    if(a.size() != b.size())
+    {
+        throw std::runtime_error("Vector dimension mismatch");
+    }
     vector<double> answer;
-    while(i< a.size() && j< b.size())
+    for(int i=0; i<a.size();i++)
     {
-        answer.push_back(a.at(i) + b.at(j));
-        i++;
-        j++;
-    }
-    if( i > j)
-    {
-        while(i < a.size()-1)
-        {
-            answer.push_back(a.at(i));
-            i++;
-        }    
-    }
-    else if( j > i)
-    {
-        while(j < b.size()-1)
-        {
-            answer.push_back(b.at(j));
-            j++;
-        }
+        answer.push_back(a.at(i) + b.at(i));
     }
 
 
@@ -41,34 +26,16 @@ Vec add(const Vec& a, const Vec& b)
 
 Vec subtract(const Vec& a, const Vec& b)
 {
-     int i=0;
-    int j=0;
     
+    if(a.size() != b.size())
+    {
+        throw std::runtime_error("Vector dimension mismatch");
+    }
     vector<double> answer;
-    while(i< a.size() && j< b.size())
+     for(int i=0; i<a.size();i++)
     {
-        answer.push_back(a.at(i) - b.at(j));
-        i++;
-        j++;
+        answer.push_back(a.at(i) - b.at(i));
     }
-    if( i > j)
-    {
-        while(i < a.size()-1)
-        {
-            answer.push_back(a.at(i));
-            i++;
-        }    
-    }
-    else if( j > i)
-    {
-        while(j < b.size()-1)
-        {
-            answer.push_back(b.at(j));
-            j++;
-        }
-    }
-
-
     
     return answer;
 }
@@ -85,33 +52,34 @@ Vec scalar_mult(const Vec& a, double s)
     return answer;
 }
 
+Vec random(int size)
+{
+    random_device rd;
+    mt19937 gen(rd());
+    uniform_real_distribution<double> dis(-1.0, 1.0);
+    
+    vector<double> answer;
+    for(int i=0;i<size;i++)
+    {
+        answer.push_back(dis(gen));
+    }
+
+    return answer;
+
+
+}
 double dot(const Vec& a, const Vec& b)
 {
     
-    int i=0;
-    int j=0;
+    if(a.size() != b.size())
+    {
+        throw std::runtime_error("Vector dimension mismatch");
+    }
     
     double answer = 0.0;
-    while(i< a.size() && j< b.size())
+    for(int i=0; i<a.size();i++)
     {
-       answer += ( a.at(i) * b.at(j));
-        i++;
-        j++;
-    }
-    if( i > j)
-    {
-        while(i < a.size()-1)
-        {
-            answer += a.at(i);
-        }    
-    }
-    else if( j > i)
-    {
-        while(j < b.size()-1)
-        {
-           answer += b.at(j);
-            j++;
-        }
+        answer +=(a.at(i) * b.at(i));
     }
 
     return answer;

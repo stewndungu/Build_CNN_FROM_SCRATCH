@@ -27,5 +27,22 @@ int main()
 
    
     print(answer);
+
+
+
+    Mat matrixA;
+    Mat matrixB;
+
+    matrixA = {
+        {1,2,3},
+        {1,2,3}
+    };
+    matrixB = {
+        {1,2},
+        {1,2},
+        {1,2}
+    };
+
+    print(multiply(matrixA,matrixB));
     return 0;
 }
