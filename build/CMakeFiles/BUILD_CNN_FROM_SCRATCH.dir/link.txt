@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/main.cpp.o CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/source/vec.cpp.o CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/source/matrix.cpp.o CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/source/activation.cpp.o CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/source/neuron.cpp.o CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/source/layer.cpp.o -o BUILD_CNN_FROM_SCRATCH 

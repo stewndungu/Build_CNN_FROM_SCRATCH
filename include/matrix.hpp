@@ -9,6 +9,8 @@ Mat multiply(const Mat& A, const Mat& B);
 
 Mat random(int rows,int cols);
 
+Mat transpose (const Mat& A);
+
 Vec multiply(const Mat& A, const Vec& x);
 
 void print(const Mat& m);

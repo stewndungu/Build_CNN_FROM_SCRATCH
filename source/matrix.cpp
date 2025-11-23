@@ -76,6 +76,21 @@ Mat random(int rows,int cols)
 
 }
 
+Mat transpose (const Mat& A)
+{
+    Mat answer(A[0].size(),vector<double>(A.size(),0.0));
+
+    for(int i=0;i<A.size();i++)
+    {
+        for(int j=0; j<A[i].size();j++)
+        {
+            answer[j][i] = A[i][j];
+        }
+    }
+    
+    return answer;
+}
+
 void print(const Mat& m)
 {
     for(int i=0;i< m.size();i++)

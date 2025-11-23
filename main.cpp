@@ -43,6 +43,14 @@ int main()
         {1,2}
     };
 
+     vector<vector<double>> matrix2 = {
+        {1, 2, 3},
+        {4, 5, 6},
+        {7, 8, 9}
+    };
+
     print(multiply(matrixA,matrixB));
+
+    print(transpose(matrix2));
     return 0;
 }
