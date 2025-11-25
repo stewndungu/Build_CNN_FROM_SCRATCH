@@ -10,15 +10,15 @@
 
 Layer::Layer(int input_size, int num_neurons)
 {
-    Mat result(num_neurons,vector<double>(input_size,0.0));
+   this->neurons.resize(num_neurons);
+   for(int i =0; i< this->neurons.size();i++)
+   {
+    
+       auto neu = new Neuron(input_size);
 
-    for(int i=0; i< num_neurons;i++)
-    {
-        for(int j=0; j< input_size;j++)
-        {
-            result[i][j]= Ne
-        }
     }
+
+        
 }
 
 Vec forward(const Vec& x)
