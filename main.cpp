@@ -2,8 +2,10 @@
 #include <iostream>
 #include "include/vec.hpp"
 #include "include/matrix.hpp"
+#include "include/neuron.hpp"
 #include <vector>
 #include <iostream>
+
 
 using namespace std;
 
@@ -19,6 +21,7 @@ int main()
     myTec.push_back(1.23);
     myTec.push_back(1.23);
 
+    
     
 
     vector<double>answer = scalar_mult(myVec,4);

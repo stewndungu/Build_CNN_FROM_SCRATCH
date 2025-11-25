@@ -13,6 +13,8 @@ Vec scalar_mult(const Vec& a, double s);
 
 Vec random(int size);
 
+double random_number();
+
 void print(const Vec& v);
 
 double dot(const Vec& a, const Vec& b);

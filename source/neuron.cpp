@@ -3,21 +3,29 @@
 #include <stdio.h>
 #include "../include/neuron.hpp"
 #include "../include/activation.hpp"
+#include "../include/vec.hpp"
+#include <stdexcept>
 
 using namespace std;
 
-class Neuron 
+Neuron::Neuron(int size)
+ {
+      this->weights= random(size) ;
+      this->bias = random_number(); 
+
+ }
+ 
+
+double Neuron::forward(vector<double>& x) const
 {
-    public:
+    
+    if (x.size() != this->weights.size()) {
+        throw std::invalid_argument("Input size does not match Neuron weights size.");
+    }
 
-        double bias =0;
+    double answer = dot(x,this->weights);
 
-        double activate(vector<double>& x) const
-        {
-            for(int i=0;i<x.size();i++)
-            {
-                x.at(i) = sigmoid(x.at(i));
-            }
-        }
+    return sigmoid(answer+bias);
+ }
+    
 
-};

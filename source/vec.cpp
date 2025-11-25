@@ -68,6 +68,17 @@ Vec random(int size)
 
 
 }
+
+double random_number()
+{
+    random_device rd;
+    mt19937 gen(rd());
+    uniform_real_distribution<double> dis(-1.0, 1.0);
+    
+    
+    return     dis(gen);
+    
+}
 double dot(const Vec& a, const Vec& b)
 {
     
