@@ -12,4 +12,6 @@ double derivatieRelu (double x);
 double tanh_act(double x);
 double derivatieTanh_act(double x);
 
+double softplus(double x);
+
 #endif

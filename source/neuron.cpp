@@ -4,19 +4,22 @@
 #include "../include/neuron.hpp"
 #include "../include/activation.hpp"
 #include "../include/vec.hpp"
+
 #include <stdexcept>
 
 using namespace std;
 
-Neuron::Neuron(int size)
+Neuron::Neuron(int size,string word)
  {
       this->weights= random(size) ;
       this->bias = random_number(); 
+      this->typeActivation = word;
+     
 
  }
  
 
-double Neuron::forward(vector<double>& x) const
+double Neuron::forward(const vector<double>& x) const
 {
     
     if (x.size() != this->weights.size()) {
@@ -25,7 +28,36 @@ double Neuron::forward(vector<double>& x) const
 
     double answer = dot(x,this->weights);
 
+    if(this->typeActivation == "softplus")
+    {
+         
+         return softplus(answer+bias);
+    }
+
+    if(this->typeActivation == "ReLu")
+    {
+         return ReLu(answer+bias);
+    }
+    if(this->typeActivation == "tanh_act")
+    {
+         return tanh_act(answer+bias);
+    }
+    
     return sigmoid(answer+bias);
  }
+
+void Neuron::print() const
+{
+    cout<< "Bias: "<< this->bias << "\n";
+    cout<< "Activation type: "<< this->typeActivation<<"\n";
+    cout<< "Weights size: "<< this->weights.size()<<"\n";
+    cout<< "Weights: ";
+    for(const auto& many : this->weights)
+    {
+        cout<< many << " " ;
+    }
+    cout<<"\n";
+   
+}
     
 

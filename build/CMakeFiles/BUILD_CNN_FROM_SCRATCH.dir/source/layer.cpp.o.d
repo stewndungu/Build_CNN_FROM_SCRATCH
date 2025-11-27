@@ -159,4 +159,9 @@ CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/source/layer.cpp.o: \
  /usr/include/c++/13/bits/stl_vector.h \
  /usr/include/c++/13/bits/stl_bvector.h \
  /usr/include/c++/13/bits/vector.tcc \
- /workspaces/Build_CNN_FROM_SCRATCH/source/../include/layer.hpp
+ /workspaces/Build_CNN_FROM_SCRATCH/source/../include/layer.hpp \
+ /workspaces/Build_CNN_FROM_SCRATCH/source/../include/vec.hpp \
+ /workspaces/Build_CNN_FROM_SCRATCH/source/../include/neuron.hpp \
+ /workspaces/Build_CNN_FROM_SCRATCH/source/../include/vec.hpp \
+ /workspaces/Build_CNN_FROM_SCRATCH/source/../include/neuron.hpp \
+ /workspaces/Build_CNN_FROM_SCRATCH/source/../include/matrix.hpp

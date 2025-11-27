@@ -7,23 +7,49 @@
 #include "../include/matrix.hpp"
 
 
-
-Layer::Layer(int input_size, int num_neurons)
+using namespace std;
+Layer::Layer(int input_size, int num_neurons,const string word)
 {
-   this->neurons.resize(num_neurons);
-   for(int i =0; i< this->neurons.size();i++)
+   this->neurons.reserve(num_neurons);
+   for(int i =0; i< num_neurons ;i++)
    {
-    
-       auto neu = new Neuron(input_size);
+
+       this->neurons.push_back(Neuron(input_size,word)) ;
+     
 
     }
+
+    
 
         
 }
 
-Vec forward(const Vec& x)
+vector<double> Layer::forward(const vector<double>& x)
 {
+    vector<double>answer;
+    answer.reserve(this->neurons.size());
+
+    for(const auto& neuron :this->neurons)
+    {
+        answer.push_back(neuron.forward(x));
+    }
+
+    
     // we are getting a vector then most likely use weights which are a matrix
     //  then do matrix * vector to get a vector
     // then use a sigmoid or relu to get a vector answer
+
+    return answer;
+}
+
+void Layer::summary()
+{
+    cout<<"Neurons in Layer: \n";
+    int i=0;
+    for(const auto& cells : this->neurons)
+    {
+        cout<<"Neurons"<<i<<": ";
+         cells.print();
+         i++;
+    }
 }

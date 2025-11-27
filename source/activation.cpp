@@ -39,3 +39,8 @@ double derivatieTanh_act(double x)
     return (1.0 - (s*s));
 
 }
+
+double softplus(double x)
+{
+    return (log(1 + exp(x)));
+}

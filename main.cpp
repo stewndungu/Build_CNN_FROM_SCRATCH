@@ -3,6 +3,7 @@
 #include "include/vec.hpp"
 #include "include/matrix.hpp"
 #include "include/neuron.hpp"
+#include "include/layer.hpp"
 #include <vector>
 #include <iostream>
 
@@ -55,5 +56,20 @@ int main()
     print(multiply(matrixA,matrixB));
 
     print(transpose(matrix2));
+
+
+
+    Layer dense(3, 10,"sigmoid");
+Vec x = {1.0, 0.5, -1.2};
+Vec y = dense.forward(x);
+print(y);
+dense.summary();
+
+ Layer D(3, 10,"ReLu");
+Vec x1 = {1.0, 0.5, -1.2};
+Vec y1 = D.forward(x1);
+print(y1);
+D.summary();
+
     return 0;
 }
