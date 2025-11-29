@@ -14,4 +14,6 @@ double derivatieTanh_act(double x);
 
 double softplus(double x);
 
+double mse(const Vec& output, const Vec& target);
+
 #endif
