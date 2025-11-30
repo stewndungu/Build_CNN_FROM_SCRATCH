@@ -8,8 +8,9 @@
 
 
 using namespace std;
-Layer::Layer(int input_size, int num_neurons,const string word)
+Layer::Layer(int input_size, int num_neurons,const string word ="sigmoid")
 {
+    //the input_size becomes the number of weights needed for a neuron
    this->neurons.reserve(num_neurons);
    for(int i =0; i< num_neurons ;i++)
    {

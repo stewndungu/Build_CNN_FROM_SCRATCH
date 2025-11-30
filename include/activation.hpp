@@ -1,6 +1,6 @@
 #ifndef ACTIVATION_HPP
 #define ACTIVATION_HPP
-
+#include "vec.hpp"
 double sigmoid(double x);
 
 double derivateSigmoid(double x);
