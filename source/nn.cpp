@@ -4,6 +4,7 @@
 #include "../include/layer.hpp"
 #include <string>
 
+using namespace std;
 
 
 NeuralNetwork::NeuralNetwork(const vector<int>& layer_sizes, string word)
@@ -19,11 +20,20 @@ NeuralNetwork::NeuralNetwork(const vector<int>& layer_sizes, string word)
         this->Layers.push_back(Layer(input_size_for_layer, num_neurons_in_layer,word));
     }
 }
-/*
+
 Vec NeuralNetwork::forward(const Vec& x)
 {
+    Vec answer=x;
+
+    for( auto& layer : this->Layers)
+    {
+        answer = (layer.forward(answer));
+    }
+
+    return answer;
 
 }
+/*
 void NeuralNetwork::backward(const Vec& x, const Vec& target, double lr){
 
 }
