@@ -18,7 +18,22 @@ Neuron::Neuron(int size,string word)
 
  }
  
-
+vector<double>& Neuron::getWeights()
+{
+     return this->weights;
+}
+double& Neuron::getBias()
+{
+     return this->bias;
+}
+void Neuron::setBias(double number)
+{
+      this->bias = number;
+}
+void Neuron::setWeights(int index, double value)
+{
+     this->weights[index] = value;
+}
 double Neuron::forward(const vector<double>& x) const
 {
     

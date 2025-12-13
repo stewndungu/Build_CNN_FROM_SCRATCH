@@ -15,6 +15,11 @@ class Neuron
 
         void print() const;
 
+        vector<double>& getWeights();
+        double& getBias();
+        void setBias(double number);;
+        void setWeights(int index, double value);
+
     private:
         double bias;
         vector<double> weights;

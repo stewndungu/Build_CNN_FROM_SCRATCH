@@ -5,6 +5,7 @@
 #include "../include/vec.hpp"
 #include "../include/neuron.hpp"
 #include "../include/matrix.hpp"
+#include "../include/activation.hpp"
 
 
 using namespace std;
@@ -24,18 +25,29 @@ Layer::Layer(int input_size, int num_neurons,const string word ="sigmoid")
 
         
 }
+const vector<Neuron>& Layer::getNeurons()
+{
+  return this->neurons;
+ }
+
+vector<double>& Layer::getOutput()
+{
+    return this->output;
+}
 
 vector<double> Layer::forward(const vector<double>& x)
 {
     vector<double>answer;
+    
     answer.reserve(this->neurons.size());
 
     for(const auto& neuron :this->neurons)
     {
+       
         answer.push_back(neuron.forward(x));
     }
 
-    
+    this->output = answer;
     // we are getting a vector then most likely use weights which are a matrix
     //  then do matrix * vector to get a vector
     // then use a sigmoid or relu to get a vector answer
