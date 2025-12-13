@@ -33,9 +33,12 @@ Vec NeuralNetwork::forward(const Vec& x)
     return answer;
 
 }
-/*
+
 void NeuralNetwork::backward(const Vec& x, const Vec& target, double lr){
 
+
+
+    
 }
 
-*/
+
