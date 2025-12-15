@@ -3,11 +3,11 @@
 #include "vec.hpp"
 double sigmoid(double x);
 
-double derivateSigmoid(double x);
+double derivativeSigmoid(double x);
 
 double ReLu(double x);
 
-double derivatieRelu (double x);
+double derivativeRelu (double x);
 
 double tanh_act(double x);
 double derivatieTanh_act(double x);

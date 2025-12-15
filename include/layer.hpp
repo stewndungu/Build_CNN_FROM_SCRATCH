@@ -13,8 +13,9 @@ class Layer
 
         Layer (int input_size, int num_neurons,const string word);
         vector<double> forward(const vector<double>& x);
-        const vector<Neuron>& getNeurons();
+        vector<Neuron>& getNeurons();
         vector<double>& getOutput();
+        string& getActivation();
         
 
         void summary();

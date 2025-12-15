@@ -7,7 +7,8 @@ add_executable(BUILD_CNN_FROM_SCRATCH
         source/matrix.cpp
         source/activation.cpp 
         source/neuron.cpp 
-        source/layer.cpp    
+        source/layer.cpp  
+        source/nn.cpp  
         )
 set_property(TARGET BUILD_CNN_FROM_SCRATCH PROPERTY CXX_STANDARD 20)
 

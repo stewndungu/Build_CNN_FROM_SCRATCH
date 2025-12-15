@@ -1,0 +1,3 @@
+/workspaces/Build_CNN_FROM_SCRATCH/build/CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir
+/workspaces/Build_CNN_FROM_SCRATCH/build/CMakeFiles/edit_cache.dir
+/workspaces/Build_CNN_FROM_SCRATCH/build/CMakeFiles/rebuild_cache.dir

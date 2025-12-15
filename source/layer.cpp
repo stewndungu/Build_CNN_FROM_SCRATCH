@@ -25,7 +25,7 @@ Layer::Layer(int input_size, int num_neurons,const string word ="sigmoid")
 
         
 }
-const vector<Neuron>& Layer::getNeurons()
+ vector<Neuron>& Layer::getNeurons()
 {
   return this->neurons;
  }
@@ -65,4 +65,9 @@ void Layer::summary()
          cells.print();
          i++;
     }
+}
+
+string& Layer::getActivation()
+{
+    return typeActivation;
 }
