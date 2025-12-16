@@ -82,7 +82,7 @@ D.summary();
     // Topology: 2 Inputs -> 4 Hidden Neurons -> 1 Output Neuron
     // Activation: "sigmoid" (easiest for XOR)
     vector<int> topology = {2, 2000,1}; 
-    NeuralNetwork nn(topology, "Relu");
+    NeuralNetwork nn(topology,"sigmoid", "Relu");
 
     // ---------------------------------------------------------
     // 2. DEFINE TRAINING DATA (XOR)

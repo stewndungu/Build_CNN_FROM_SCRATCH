@@ -8,9 +8,15 @@
 using namespace std;
 
 
-NeuralNetwork::NeuralNetwork(const vector<int>& layer_sizes, string word)
+NeuralNetwork::NeuralNetwork(const vector<int>& layer_sizes, string first_activation, string second_activation)
 {
-    for (size_t i = 1; i < layer_sizes.size(); ++i) 
+    if(layer_sizes.size() > 1)
+    {
+     int input_size_for_layer = layer_sizes[0]; 
+     int num_neurons_in_layer = layer_sizes[1];   
+     this->Layers.push_back(Layer(input_size_for_layer, num_neurons_in_layer,first_activation));
+    }
+    for (size_t i = 2; i < layer_sizes.size(); ++i) 
     {
         
         int input_size_for_layer = layer_sizes[i - 1]; 
@@ -18,7 +24,7 @@ NeuralNetwork::NeuralNetwork(const vector<int>& layer_sizes, string word)
       
         int num_neurons_in_layer = layer_sizes[i];      
 
-        this->Layers.push_back(Layer(input_size_for_layer, num_neurons_in_layer,word));
+        this->Layers.push_back(Layer(input_size_for_layer, num_neurons_in_layer,second_activation));
     }
 }
 

@@ -6,7 +6,7 @@ class NeuralNetwork
 {
     public:
 
-        NeuralNetwork(const vector<int>& layers_sizes, string word);
+        NeuralNetwork(const vector<int>& layers_sizes,string first_activation, string second_activation);
         Vec forward( Vec& x);
         void backward(const Vec& x, const Vec& target, double lr);
 

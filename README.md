@@ -9,7 +9,7 @@ A beginner trial to make a small neural network from scratch
     - Activation (functions inside hpp & cpp)
     - Neuron
     - Layer
-- Build backpropogation + neural network class (11/30/25 - 12/5)
+- Build backpropogation + neural network class (11/30/25 - 12/16)
     - Neural Network (function inside hpp & cpp)
     - loss function
     - backpropogation
