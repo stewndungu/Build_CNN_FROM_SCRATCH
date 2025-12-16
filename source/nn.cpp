@@ -67,7 +67,7 @@ void NeuralNetwork::backward(const Vec& x, const Vec& target, double lr){
         double derivative = 1.0; 
         if(activation_type == "sigmoid") {
             derivative = derivativeSigmoid(a);
-        } else if (activation_type == "relu") {
+        } else if (activation_type == "ReLu") {
             // ReLU derivative is 1 if a > 0, else 0
             derivative = derivativeRelu(a);
         }
@@ -120,7 +120,7 @@ void NeuralNetwork::backward(const Vec& x, const Vec& target, double lr){
             double derivative = 1.0;
             if(current_layer.getActivation() == "sigmoid") {
                 derivative = derivativeSigmoid(a);
-            } else if (current_layer.getActivation() == "relu") {
+            } else if (current_layer.getActivation() == "ReLu") {
                 derivative = derivativeRelu (a);
             }
             

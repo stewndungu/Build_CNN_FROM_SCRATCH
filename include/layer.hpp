@@ -16,6 +16,7 @@ class Layer
         vector<Neuron>& getNeurons();
         vector<double>& getOutput();
         string& getActivation();
+        const std::vector<double>& getWeightedSums() const; //
         
 
         void summary();
@@ -23,6 +24,7 @@ class Layer
         vector<Neuron> neurons;
         vector<double> output;
         string typeActivation;
+        std::vector<double> weighted_sums; // <<< ADD THIS
 
 
 

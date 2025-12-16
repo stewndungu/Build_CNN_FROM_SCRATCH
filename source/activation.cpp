@@ -14,8 +14,8 @@ double sigmoid(double x)
 
 double derivativeSigmoid(double x)
 {
-    double s= sigmoid(x);
-    return s * (1.0 - s);
+    
+    return x * (1.0 - x);
 }
 
 double ReLu(double x)
@@ -35,8 +35,8 @@ double tanh_act(double x)
 
 double derivatieTanh_act(double x)
 {
-    double s = tanh_act(x);
-    return (1.0 - (s*s));
+    
+    return (1.0 - (x*x));
 
 }
 

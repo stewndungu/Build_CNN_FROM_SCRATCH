@@ -52,10 +52,15 @@ Vec scalar_mult(const Vec& a, double s)
     return answer;
 }
 
+std::mt19937& get_generator()
+{
+    static std::random_device rd;
+    static std::mt19937 gen(rd());
+    return gen;
+}
 Vec random(int size)
 {
-    random_device rd;
-    mt19937 gen(rd());
+    std::mt19937& gen = get_generator();
     uniform_real_distribution<double> dis(-1.0, 1.0);
     
     vector<double> answer;
@@ -71,12 +76,11 @@ Vec random(int size)
 
 double random_number()
 {
-    random_device rd;
-    mt19937 gen(rd());
+    std::mt19937& gen = get_generator();
     uniform_real_distribution<double> dis(-1.0, 1.0);
     
     
-    return     dis(gen);
+    return dis(gen);
     
 }
 double dot(const Vec& a, const Vec& b)

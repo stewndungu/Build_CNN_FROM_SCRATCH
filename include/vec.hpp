@@ -1,9 +1,11 @@
 #ifndef VEC_HPP
 #define VEC_HPP
 #include <vector>
-
+#include <random>
 
 using Vec = std::vector<double>;
+
+std::mt19937& get_generator();
 
 Vec add(const Vec& a, const Vec& b); 
 
