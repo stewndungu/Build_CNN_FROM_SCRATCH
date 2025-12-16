@@ -81,8 +81,8 @@ D.summary();
     // ---------------------------------------------------------
     // Topology: 2 Inputs -> 4 Hidden Neurons -> 1 Output Neuron
     // Activation: "sigmoid" (easiest for XOR)
-    vector<int> topology = {2, 2000,1}; 
-    NeuralNetwork nn(topology,"sigmoid", "Relu");
+    vector<int> topology = {2,700,1}; 
+    NeuralNetwork nn(topology,"sigmoid", "ReLu");
 
     // ---------------------------------------------------------
     // 2. DEFINE TRAINING DATA (XOR)
@@ -135,7 +135,7 @@ D.summary();
     // ---------------------------------------------------------
     // 3. THE TRAINING LOOP
     // ---------------------------------------------------------
-    int epochs = 600;
+    int epochs = 70;
     double learning_rate = 0.1;
 
     std::cout << "Training Started..." << std::endl;
@@ -155,7 +155,7 @@ D.summary();
         }
 
         // OPTIONAL: Print progress every 1000 epochs
-        if (i % 10 == 0) {
+        if (i % 1 == 0) {
             // Calculate a quick MSE (Mean Squared Error) just to see if it's dropping
             double total_error = 0;
             for(size_t j=0; j<inputs.size(); j++) {
