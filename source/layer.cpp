@@ -2,10 +2,6 @@
 #include <vector>
 #include <stdio.h>
 #include "../include/layer.hpp"
-#include "../include/vec.hpp"
-#include "../include/neuron.hpp"
-#include "../include/matrix.hpp"
-#include "../include/activation.hpp"
 
 
 using namespace std;

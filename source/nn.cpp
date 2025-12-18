@@ -1,10 +1,8 @@
 #include "../include/nn.hpp"
-#include "../include/vec.hpp"
 #include <iostream>
-#include "../include/layer.hpp"
 #include <string>
 #include "../include/activation.hpp"
-
+#include <fstream>
 using namespace std;
 
 
@@ -185,4 +183,101 @@ void NeuralNetwork::backward(const Vec& x, const Vec& target, double lr){
     
 }
 
+
+//with help from gemini
+// =========================================================
+// NEW: SAVE FUNCTION
+// =========================================================
+void NeuralNetwork::save(const std::string& filename) const {
+    std::ofstream file(filename);
+    if (!file.is_open()) {
+        std::cerr << "Error: Could not open file " << filename << " for saving." << std::endl;
+        return;
+    }
+
+    // 1. Save the Network Topology Size
+    file <<this->Layers.size() << "\n"; 
+    
+    for ( Layer layer : this->Layers) {
+        // Save neuron count and activation type (useful for validation/debugging)
+        file << layer.getNeurons().size() << " " << layer.getActivation() << "\n";
+        
+        for (Neuron neuron : layer.getNeurons()) {
+            // 2. Save Bias
+            file << neuron.getBias() << "\n";
+            
+            // 3. Save Weights
+            const Vec& weights = neuron.getWeights();
+            file << weights.size() << " "; // Save weight count first
+            for (double w : weights) {
+                file << w << " ";
+            }
+            file << "\n";
+        }
+    }
+    file.close();
+    std::cout << "Model saved to " << filename << std::endl;
+}
+
+// =========================================================
+// NEW: LOAD FUNCTION
+// =========================================================
+void NeuralNetwork::load(const std::string& filename) {
+    std::ifstream file(filename);
+    if (!file.is_open()) {
+        std::cerr << "Error: Could not open file " << filename << " for loading." << std::endl;
+        return;
+    }
+
+    // CRITICAL: We assume the NeuralNetwork object has ALREADY been constructed 
+    // with the correct topology before calling load.
+
+    int layer_count_from_file;
+    if (!(file >> layer_count_from_file)) {
+        std::cerr << "Error: Failed to read layer count." << std::endl;
+        return;
+    }
+    
+    // Basic validation to prevent crashes
+    if (layer_count_from_file != Layers.size()) {
+        std::cerr << "Error: Loaded file has " << layer_count_from_file 
+                  << " layers, but current network has " << Layers.size() 
+                  << " layers. Cannot load." << std::endl;
+        file.close();
+        return;
+    }
+
+    for (size_t i = 0; i < Layers.size(); ++i) {
+        Layer& layer = Layers[i];
+        vector<Neuron>& neurons = layer.getNeurons();
+        
+        int neuron_count_from_file;
+        std::string activation_type_from_file;
+        
+        // Read the layer metadata (and discard/validate)
+        if (!(file >> neuron_count_from_file >> activation_type_from_file)) { /* Error handling */ return; }
+
+        for (size_t j = 0; j < neurons.size(); ++j) {
+            Neuron& neuron = neurons[j];
+            
+            // 1. Load Bias
+            double bias_value;
+            if (!(file >> bias_value)) { /* Error handling */ return; }
+            neuron.setBias(bias_value);
+            
+            // 2. Load Weights
+            int weight_count;
+            if (!(file >> weight_count)) { /* Error handling */ return; }
+            
+            for (int k = 0; k < weight_count; ++k) {
+                double weight_value;
+                if (!(file >> weight_value)) { /* Error handling */ return; }
+                neuron.setWeights(k, weight_value);
+            }
+        }
+    }
+
+    file.close();
+    std::cout << "Model loaded from " << filename << std::endl;
+}
 

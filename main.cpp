@@ -1,9 +1,4 @@
 #include <stdio.h>
-#include <iostream>
-//#include "include/vec.hpp"
-//#include "include/matrix.hpp"
-//#include "include/neuron.hpp"
-//#include "include/layer.hpp"
 #include "include/nn.hpp"
 #include <vector>
 #include <iostream>
@@ -84,6 +79,18 @@ D.summary();
     vector<int> topology = {2,700,1}; 
     NeuralNetwork nn(topology,"sigmoid", "ReLu");
 
+
+     string answer;
+     int epochs = 70;
+    cout<< "Do you want to load any old saved weights? Say yay or nay"<<endl;
+   
+    cin>> answer;
+if(answer == "yay") 
+{
+    cout<< "Please enter the adjusted epochs? Enter a number"<<endl;
+    cin >> epochs;
+}
+
     // ---------------------------------------------------------
     // 2. DEFINE TRAINING DATA (XOR)
     // ---------------------------------------------------------
@@ -135,13 +142,23 @@ D.summary();
     // ---------------------------------------------------------
     // 3. THE TRAINING LOOP
     // ---------------------------------------------------------
-    int epochs = 70;
+   
     double learning_rate = 0.1;
+    double min_lr = 0.009;
 
     std::cout << "Training Started..." << std::endl;
 
     for (int i = 0; i < epochs; i++) {
-        
+         if (i > 0 && i % 50 == 0 && learning_rate > min_lr) 
+         {
+            learning_rate *= 0.99;
+                
+             // Safety check: Don't let it dip even slightly below the floor
+             if (learning_rate < min_lr) 
+            {
+              learning_rate = min_lr;
+            }
+         }
         // Loop through every training example
         for (size_t j = 0; j < inputs.size(); j++) {
             
@@ -169,6 +186,7 @@ D.summary();
 
     std::cout << "Training Finished!" << std::endl;
 
+    nn.save("trained_xor_model.txt");
     // ---------------------------------------------------------
     // 4. VERIFICATION (TESTING)
     // ---------------------------------------------------------

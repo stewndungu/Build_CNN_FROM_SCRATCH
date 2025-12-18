@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include "../include/neuron.hpp"
 #include "../include/activation.hpp"
-#include "../include/vec.hpp"
+//#include "../include/vec.hpp"
 
 #include <stdexcept>
 
