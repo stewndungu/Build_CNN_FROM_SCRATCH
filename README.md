@@ -13,5 +13,5 @@ A beginner trial to make a small neural network from scratch
     - Neural Network (function inside hpp & cpp)
     - save & load weights into txt
     - backpropogation
-    - learning rate scheduler 
+    - learning rate adaptation 
     - xor_test.cpp for checking 
