@@ -69,19 +69,19 @@ include CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/flags.make
 
-CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/main.cpp.o: CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/flags.make
-CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/main.cpp.o: /workspaces/Build_CNN_FROM_SCRATCH/main.cpp
-CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/main.cpp.o: CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/workspaces/Build_CNN_FROM_SCRATCH/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/main.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/main.cpp.o -MF CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/main.cpp.o.d -o CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/main.cpp.o -c /workspaces/Build_CNN_FROM_SCRATCH/main.cpp
+CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/xor_test.cpp.o: CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/flags.make
+CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/xor_test.cpp.o: /workspaces/Build_CNN_FROM_SCRATCH/xor_test.cpp
+CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/xor_test.cpp.o: CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/workspaces/Build_CNN_FROM_SCRATCH/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/xor_test.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/xor_test.cpp.o -MF CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/xor_test.cpp.o.d -o CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/xor_test.cpp.o -c /workspaces/Build_CNN_FROM_SCRATCH/xor_test.cpp
 
-CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/main.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /workspaces/Build_CNN_FROM_SCRATCH/main.cpp > CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/main.cpp.i
+CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/xor_test.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/xor_test.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /workspaces/Build_CNN_FROM_SCRATCH/xor_test.cpp > CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/xor_test.cpp.i
 
-CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/main.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /workspaces/Build_CNN_FROM_SCRATCH/main.cpp -o CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/main.cpp.s
+CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/xor_test.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/xor_test.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /workspaces/Build_CNN_FROM_SCRATCH/xor_test.cpp -o CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/xor_test.cpp.s
 
 CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/source/vec.cpp.o: CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/flags.make
 CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/source/vec.cpp.o: /workspaces/Build_CNN_FROM_SCRATCH/source/vec.cpp
@@ -169,7 +169,7 @@ CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/source/nn.cpp.s: cmake_force
 
 # Object files for target BUILD_CNN_FROM_SCRATCH
 BUILD_CNN_FROM_SCRATCH_OBJECTS = \
-"CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/main.cpp.o" \
+"CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/xor_test.cpp.o" \
 "CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/source/vec.cpp.o" \
 "CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/source/matrix.cpp.o" \
 "CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/source/activation.cpp.o" \
@@ -180,7 +180,7 @@ BUILD_CNN_FROM_SCRATCH_OBJECTS = \
 # External object files for target BUILD_CNN_FROM_SCRATCH
 BUILD_CNN_FROM_SCRATCH_EXTERNAL_OBJECTS =
 
-BUILD_CNN_FROM_SCRATCH: CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/main.cpp.o
+BUILD_CNN_FROM_SCRATCH: CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/xor_test.cpp.o
 BUILD_CNN_FROM_SCRATCH: CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/source/vec.cpp.o
 BUILD_CNN_FROM_SCRATCH: CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/source/matrix.cpp.o
 BUILD_CNN_FROM_SCRATCH: CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/source/activation.cpp.o

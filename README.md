@@ -11,6 +11,7 @@ A beginner trial to make a small neural network from scratch
     - Layer
 - Build backpropogation + neural network class (11/30/25 - 12/19)
     - Neural Network (function inside hpp & cpp)
-    - save & load weights 
+    - save & load weights into txt
     - backpropogation
     - learning rate scheduler 
+    - xor_test.cpp for checking 

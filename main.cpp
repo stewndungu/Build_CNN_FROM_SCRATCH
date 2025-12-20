@@ -81,15 +81,21 @@ D.summary();
 
 
      string answer;
-     int epochs = 70;
-    cout<< "Do you want to load any old saved weights? Say yay or nay"<<endl;
-   
+     string filename;
+     int epochs = 1500;
+
+    cout<<"Do you want to load any old saved weights? Say yay or nay" << "\n";
     cin>> answer;
-if(answer == "yay") 
-{
-    cout<< "Please enter the adjusted epochs? Enter a number"<<endl;
-    cin >> epochs;
-}
+   
+    if(answer == "yay") 
+    {
+        cout<<"Please enter the filename?"<<"\n";
+        cin >> filename;
+        nn.load(filename);
+        cout<< "Please enter the adjusted epochs? Enter a number"<<"\n";
+        cin >> epochs;
+    }
+    
 
     // ---------------------------------------------------------
     // 2. DEFINE TRAINING DATA (XOR)
@@ -172,7 +178,7 @@ if(answer == "yay")
         }
 
         // OPTIONAL: Print progress every 1000 epochs
-        if (i % 1 == 0) {
+        if (i % 100 == 0) {
             // Calculate a quick MSE (Mean Squared Error) just to see if it's dropping
             double total_error = 0;
             for(size_t j=0; j<inputs.size(); j++) {

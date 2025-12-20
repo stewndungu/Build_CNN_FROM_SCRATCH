@@ -74,7 +74,7 @@ void NeuralNetwork::backward(const Vec& x, const Vec& target, double lr){
         } else if (activation_type == "ReLu") {
             // ReLU derivative is 1 if a > 0, else 0
             derivative = derivativeRelu(a);
-        }
+        } 
         
         // 3. Store dZ
         dZ_output.push_back(error * derivative);
@@ -195,6 +195,8 @@ void NeuralNetwork::save(const std::string& filename) const {
         return;
     }
 
+   
+
     // 1. Save the Network Topology Size
     file <<this->Layers.size() << "\n"; 
     
@@ -229,6 +231,7 @@ void NeuralNetwork::load(const std::string& filename) {
         return;
     }
 
+    /*
     // CRITICAL: We assume the NeuralNetwork object has ALREADY been constructed 
     // with the correct topology before calling load.
 
@@ -255,26 +258,70 @@ void NeuralNetwork::load(const std::string& filename) {
         std::string activation_type_from_file;
         
         // Read the layer metadata (and discard/validate)
-        if (!(file >> neuron_count_from_file >> activation_type_from_file)) { /* Error handling */ return; }
+        if (!(file >> neuron_count_from_file >> activation_type_from_file)) {  return; }
 
         for (size_t j = 0; j < neurons.size(); ++j) {
             Neuron& neuron = neurons[j];
             
             // 1. Load Bias
             double bias_value;
-            if (!(file >> bias_value)) { /* Error handling */ return; }
+            if (!(file >> bias_value)) {  return; }
             neuron.setBias(bias_value);
             
             // 2. Load Weights
             int weight_count;
-            if (!(file >> weight_count)) { /* Error handling */ return; }
+            if (!(file >> weight_count)) {  return; }
             
             for (int k = 0; k < weight_count; ++k) {
                 double weight_value;
-                if (!(file >> weight_value)) { /* Error handling */ return; }
+                if (!(file >> weight_value)) {  return; }
                 neuron.setWeights(k, weight_value);
             }
         }
+    }
+    */
+
+    int file_layer_count;
+    file >> file_layer_count;
+
+    this->Layers.clear(); // Clear the old structure entirely
+
+    for (int i = 0; i < file_layer_count; ++i) {
+        int neuron_count;
+        string act_type;
+        file >> neuron_count >> act_type;
+
+        // 1. We peek at the first neuron's data to see how many weights we need
+        // Since we can't 'peek' easily in fstream, we store the values temporarily
+        double first_bias;
+        int weight_count;
+        file >> first_bias >> weight_count;
+
+        // 2. Now we can create the layer because we know the weight_count (input_size)
+        Layer new_layer(weight_count, neuron_count, act_type);
+        auto& real_neurons = new_layer.getNeurons();
+
+        // 3. Set the data for the first neuron we already read
+        real_neurons[0].setBias(first_bias);
+        for (int k = 0; k < weight_count; ++k) {
+            double w;
+            file >> w;
+            real_neurons[0].setWeights(k, w);
+        }
+
+        // 4. Fill in the rest of the neurons for this layer
+        for (int j = 1; j < neuron_count; ++j) {
+            double b;
+            int w_count_check;
+            file >> b >> w_count_check;
+            real_neurons[j].setBias(b);
+            for (int k = 0; k < weight_count; ++k) {
+                double w;
+                file >> w;
+                real_neurons[j].setWeights(k, w);
+            }
+        }
+        this->Layers.push_back(new_layer);
     }
 
     file.close();

@@ -129,30 +129,6 @@ BUILD_CNN_FROM_SCRATCH/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/build.make CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/build
 .PHONY : BUILD_CNN_FROM_SCRATCH/fast
 
-main.o: main.cpp.o
-.PHONY : main.o
-
-# target to build an object file
-main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/build.make CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/main.cpp.o
-.PHONY : main.cpp.o
-
-main.i: main.cpp.i
-.PHONY : main.i
-
-# target to preprocess a source file
-main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/build.make CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/main.cpp.i
-.PHONY : main.cpp.i
-
-main.s: main.cpp.s
-.PHONY : main.s
-
-# target to generate assembly for a file
-main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/build.make CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/main.cpp.s
-.PHONY : main.cpp.s
-
 source/activation.o: source/activation.cpp.o
 .PHONY : source/activation.o
 
@@ -297,6 +273,30 @@ source/vec.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/build.make CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/source/vec.cpp.s
 .PHONY : source/vec.cpp.s
 
+xor_test.o: xor_test.cpp.o
+.PHONY : xor_test.o
+
+# target to build an object file
+xor_test.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/build.make CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/xor_test.cpp.o
+.PHONY : xor_test.cpp.o
+
+xor_test.i: xor_test.cpp.i
+.PHONY : xor_test.i
+
+# target to preprocess a source file
+xor_test.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/build.make CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/xor_test.cpp.i
+.PHONY : xor_test.cpp.i
+
+xor_test.s: xor_test.cpp.s
+.PHONY : xor_test.s
+
+# target to generate assembly for a file
+xor_test.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/build.make CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/xor_test.cpp.s
+.PHONY : xor_test.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -306,9 +306,6 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... BUILD_CNN_FROM_SCRATCH"
-	@echo "... main.o"
-	@echo "... main.i"
-	@echo "... main.s"
 	@echo "... source/activation.o"
 	@echo "... source/activation.i"
 	@echo "... source/activation.s"
@@ -327,6 +324,9 @@ help:
 	@echo "... source/vec.o"
 	@echo "... source/vec.i"
 	@echo "... source/vec.s"
+	@echo "... xor_test.o"
+	@echo "... xor_test.i"
+	@echo "... xor_test.s"
 .PHONY : help
 
 

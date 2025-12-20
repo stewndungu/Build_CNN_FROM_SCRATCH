@@ -194,8 +194,4 @@ CMakeFiles/BUILD_CNN_FROM_SCRATCH.dir/source/layer.cpp.o: \
  /usr/include/c++/13/bits/stl_numeric.h \
  /usr/include/c++/13/pstl/glue_numeric_defs.h \
  /usr/include/c++/13/pstl/execution_defs.h \
- /workspaces/Build_CNN_FROM_SCRATCH/source/../include/neuron.hpp \
- /workspaces/Build_CNN_FROM_SCRATCH/source/../include/vec.hpp \
- /workspaces/Build_CNN_FROM_SCRATCH/source/../include/neuron.hpp \
- /workspaces/Build_CNN_FROM_SCRATCH/source/../include/matrix.hpp \
- /workspaces/Build_CNN_FROM_SCRATCH/source/../include/activation.hpp
+ /workspaces/Build_CNN_FROM_SCRATCH/source/../include/neuron.hpp
