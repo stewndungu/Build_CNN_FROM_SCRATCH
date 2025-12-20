@@ -9,7 +9,15 @@ Layer::Layer(int input_size, int num_neurons,const string word ="sigmoid")
 {
     //the input_size becomes the number of weights needed for a neuron
    this->typeActivation = word;
+   this->acc_bias_gradients.resize(num_neurons, 0.0);
+   this->acc_weight_gradients.resize(num_neurons);
    this->neurons.reserve(num_neurons);
+
+   for(int j = 0; j < num_neurons;j++)
+   {
+    acc_weight_gradients[j].resize(input_size,0.0);
+   }
+
    for(int i =0; i< num_neurons ;i++)
    {
 
@@ -67,4 +75,13 @@ void Layer::summary()
 string& Layer::getActivation()
 {
     return typeActivation;
+}
+
+vector<Vec>& Layer::get_acc_weight_gradients()
+{
+    return acc_weight_gradients;
+}
+Vec& Layer::get_acc_bias_gradients()
+{
+    return acc_bias_gradients;
 }

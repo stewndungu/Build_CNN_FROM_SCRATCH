@@ -18,13 +18,17 @@ class Layer
         string& getActivation();
         const std::vector<double>& getWeightedSums() const; //
         
+        vector<Vec>& get_acc_weight_gradients();
+        Vec& get_acc_bias_gradients();
 
         void summary();
     private:
         vector<Neuron> neurons;
         vector<double> output;
         string typeActivation;
-        std::vector<double> weighted_sums; // <<< ADD THIS
+        vector<Vec> acc_weight_gradients;
+        Vec acc_bias_gradients;
+        //std::vector<double> weighted_sums; // <<< ADD THIS
 
 
 

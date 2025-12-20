@@ -328,3 +328,50 @@ void NeuralNetwork::load(const std::string& filename) {
     std::cout << "Model loaded from " << filename << std::endl;
 }
 
+
+
+
+void NeuralNetwork::clear_gradients()
+{
+
+    for(Layer layer : this->Layers)
+    {
+         vector<Vec>& weights = layer.get_acc_weight_gradients();
+         Vec& bias = layer.get_acc_bias_gradients();
+
+         fill(bias.begin(),bias.end(),0.0);
+
+        for(auto wei : weights)
+        {
+            fill(wei.begin(),wei.end() ,0.0);
+        }
+    }
+   
+}
+
+void NeuralNetwork::update_gradients(double batch_size, double lr)
+{
+    for( Layer layer : this->Layers)
+    {
+        Vec& bias = layer.get_acc_bias_gradients();
+        vector<Vec>& weights = layer.get_acc_weight_gradients();
+        vector<Neuron>& layer_neuron = layer.getNeurons();
+        
+        for( size_t i = 0; i< layer_neuron.size();i++)
+        {
+            Neuron& neuron = layer_neuron[i];
+            //update bias
+            double avg_bias_gradient = bias[i] / batch_size; // Average the accumulated gradients
+            double new_bias = neuron.getBias() - lr * avg_bias_gradient;
+            neuron.setBias(new_bias);
+
+            for(size_t j = 0; j < neuron.getWeights().size();i++)
+            {
+                //update the weights
+                double avg_weight_gradient = weights[i][j] / batch_size; // Average the accumulated gradients
+                double new_weight = neuron.getWeights()[j] - lr * avg_weight_gradient;
+                neuron.setWeights(j, new_weight);
+            }
+        }
+    }
+}

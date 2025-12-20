@@ -11,6 +11,9 @@ class NeuralNetwork
         void save(const std::string& filename) const;
         void load(const std::string& filename);
 
+        void clear_gradients();
+        void update_gradients(double batch_size, double lr);
+
 
     private:
         vector<Layer>Layers;
