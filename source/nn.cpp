@@ -72,7 +72,7 @@ void NeuralNetwork::backward(const Vec& x, const Vec& target, double lr){
         if(activation_type == "sigmoid") {
             derivative = derivativeSigmoid(a);
         } else if (activation_type == "ReLu") {
-            // ReLU derivative is 1 if a > 0, else 0
+            // ReLU derivative is 1 if a > 0, else 0.1 not 0.o to avoid dying ReLu problem
             derivative = derivativeRelu(a);
         } 
         
@@ -136,7 +136,7 @@ void NeuralNetwork::backward(const Vec& x, const Vec& target, double lr){
 
 
     // ============================================================
-    // STEP 3: UPDATE WEIGHTS & BIASES (The Fix)
+    // STEP 3: UPDATE WEIGHTS & BIASES 
     // ============================================================
     // Now we have dZ for every layer. We can update parameters.
     
@@ -151,14 +151,16 @@ void NeuralNetwork::backward(const Vec& x, const Vec& target, double lr){
         
         // Use a non-const reference to neurons so we can modify them
         
-        
-        // Let's assume you add this to Layer.hpp:
-        // vector<Neuron>& getNeurons() { return neurons; } 
+        Layer& current_layer = Layers[i];
+        Vec& bias = current_layer.get_acc_bias_gradients();
+        vector<Vec>& weights = current_layer.get_acc_weight_gradients();
+
         
         vector<Neuron>& layer_neurons = Layers[i].getNeurons(); 
         
         for(size_t j = 0; j < layer_neurons.size(); j++) {
             
+            /* // old idea of updating after each cycle
             // 1. Update Bias
             double old_bias = layer_neurons[j].getBias();
             double bias_change = dZ[j] * lr;
@@ -176,12 +178,24 @@ void NeuralNetwork::backward(const Vec& x, const Vec& target, double lr){
                 
                 // Use your setter
                 layer_neurons[j].setWeights(k, old_weight - weight_change);
+                */
+
+            // add up the Bias Gradient and weight gradients
+            bias[j] += dZ[j];
+
+
+            for(size_t k = 0; k< input.size();k++)
+                {
+                    weights[j][k] +=  dZ[j] * input[k];;
+                }
             }
         }
-    }
+            
+    
+   
+     }
 
     
-}
 
 
 //with help from gemini
@@ -334,14 +348,14 @@ void NeuralNetwork::load(const std::string& filename) {
 void NeuralNetwork::clear_gradients()
 {
 
-    for(Layer layer : this->Layers)
+    for(Layer& layer : this->Layers)
     {
          vector<Vec>& weights = layer.get_acc_weight_gradients();
          Vec& bias = layer.get_acc_bias_gradients();
 
          fill(bias.begin(),bias.end(),0.0);
 
-        for(auto wei : weights)
+        for(auto& wei : weights)
         {
             fill(wei.begin(),wei.end() ,0.0);
         }
@@ -351,7 +365,7 @@ void NeuralNetwork::clear_gradients()
 
 void NeuralNetwork::update_gradients(double batch_size, double lr)
 {
-    for( Layer layer : this->Layers)
+    for( Layer& layer : this->Layers)
     {
         Vec& bias = layer.get_acc_bias_gradients();
         vector<Vec>& weights = layer.get_acc_weight_gradients();
@@ -360,15 +374,15 @@ void NeuralNetwork::update_gradients(double batch_size, double lr)
         for( size_t i = 0; i< layer_neuron.size();i++)
         {
             Neuron& neuron = layer_neuron[i];
-            //update bias
-            double avg_bias_gradient = bias[i] / batch_size; // Average the accumulated gradients
+            //update bias based on batch
+            double avg_bias_gradient = bias[i] / batch_size; 
             double new_bias = neuron.getBias() - lr * avg_bias_gradient;
             neuron.setBias(new_bias);
 
-            for(size_t j = 0; j < neuron.getWeights().size();i++)
+            for(size_t j = 0; j < neuron.getWeights().size();j++)
             {
-                //update the weights
-                double avg_weight_gradient = weights[i][j] / batch_size; // Average the accumulated gradients
+                //update the weights based on batch
+                double avg_weight_gradient = weights[i][j] / batch_size; 
                 double new_weight = neuron.getWeights()[j] - lr * avg_weight_gradient;
                 neuron.setWeights(j, new_weight);
             }
