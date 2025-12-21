@@ -2,7 +2,8 @@
 #include "include/nn.hpp"
 #include <vector>
 #include <iostream>
-
+#include <algorithm> 
+#include <random>
 
 using namespace std;
 
@@ -79,7 +80,7 @@ D.summary();
     vector<int> topology = {2,700,1}; 
     NeuralNetwork nn(topology,"sigmoid", "ReLu");
 
-
+    int BATCH_SIZE = 1;
      string answer;
      string filename;
      int epochs = 1500;
@@ -95,7 +96,11 @@ D.summary();
         cout<< "Please enter the adjusted epochs? Enter a number"<<"\n";
         cin >> epochs;
     }
+    cout << "What is your batch-size?enter a number\n";
+    cin >> BATCH_SIZE;
     
+
+   
 
     // ---------------------------------------------------------
     // 2. DEFINE TRAINING DATA (XOR)
@@ -145,6 +150,9 @@ D.summary();
     {0.0}, {1.0}, {1.0}, {0.0}
 };
 
+     vector<int> indices(inputs.size());
+     iota(indices.begin(),indices.end(),0);
+     default_random_engine rng(time(NULL));
     // ---------------------------------------------------------
     // 3. THE TRAINING LOOP
     // ---------------------------------------------------------
@@ -155,6 +163,7 @@ D.summary();
     std::cout << "Training Started..." << std::endl;
 
     for (int i = 0; i < epochs; i++) {
+        //learning rate (lr) adjuster over time
          if (i > 0 && i % 50 == 0 && learning_rate > min_lr) 
          {
             learning_rate *= 0.99;
@@ -165,6 +174,26 @@ D.summary();
               learning_rate = min_lr;
             }
          }
+         
+         shuffle(indices.begin(),indices.end(),rng);
+
+         int num_batch = inputs.size() / BATCH_SIZE;
+
+         for(int batch = 0; batch < num_batch; batch++)
+         {
+            nn.clear_gradients();
+            for(size_t j =0; j < BATCH_SIZE; j++)
+            {
+                int current_index = indices[batch * BATCH_SIZE + j ];
+
+                nn.forward(inputs[current_index]);
+                nn.backward(inputs[current_index],targets[current_index],learning_rate);
+            }
+
+            nn.update_gradients(BATCH_SIZE,learning_rate);
+
+        }
+        /*
         // Loop through every training example
         for (size_t j = 0; j < inputs.size(); j++) {
             
@@ -175,8 +204,8 @@ D.summary();
 
             // Step B: Backward Pass (Learn from mistake)
             nn.backward(inputs[j], targets[j], learning_rate);
-        }
-
+        }*/
+       
         // OPTIONAL: Print progress every 1000 epochs
         if (i % 100 == 0) {
             // Calculate a quick MSE (Mean Squared Error) just to see if it's dropping
