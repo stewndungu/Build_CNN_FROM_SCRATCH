@@ -9,9 +9,10 @@ A beginner trial to make a small neural network from scratch
     - Activation (functions inside hpp & cpp)
     - Neuron
     - Layer
-- Build backpropogation + neural network class (11/30/25 - 12/19)
+- Build backpropogation + neural network class (11/30/25 - 12/21)
     - Neural Network (function inside hpp & cpp)
     - save & load weights into txt
     - backpropogation
     - learning rate adaptation 
-    - xor_test.cpp for checking 
+    - xor_test.cpp for checking
+    - Batch size training
