@@ -16,3 +16,4 @@ A beginner trial to make a small neural network from scratch
     - learning rate adaptation 
     - xor_test.cpp for checking
     - Batch size training
+- Build convolution & pgm file loading (12/21/25 - 12/23)
