@@ -1,8 +1,7 @@
 #include <iostream>
-#include <vector>
 #include <stdio.h>
 #include "../include/matrix.hpp"
-#include <random>
+
 
 using namespace std;
 
@@ -107,3 +106,80 @@ void print(const Mat& m)
     
 
 }
+
+Mat conv2d(const Mat& img, const Mat& kernel)
+ {
+    int img_h = img.size();
+    int img_w = img[0].size();
+    int k_size = kernel.size(); 
+    int offset = k_size / 2;    // for a 3x3 kernel, offset is 1
+
+  
+    Mat output(img_h, Vec(img_w, 0.0));
+
+    #pragma omp parallel for
+    for (int i = offset; i < img_h - offset; i++) {
+        for (int j = offset; j < img_w - offset; j++) {
+            
+            double sum = 0.0;
+           
+            for (int ki = 0; ki < k_size; ki++) {
+                for (int kj = 0; kj < k_size; kj++) {
+                    
+                    sum += kernel[ki][kj] * img[i - offset + ki][j - offset + kj];
+                }
+            }
+            output[i][j] = sum;
+        }
+    }
+    return output;
+}
+Mat load_pgm(const string& path)
+{
+    
+    int width = 0;
+    int height = 0;
+    int grayvalue = 0;
+    string type;
+    Mat fileinfo;
+    ifstream file(path);
+
+    if(!file.is_open())
+    {
+        cout<< "Error: Trouble opening the file\n";
+        return {};
+    }
+
+    file>> type;
+    if (type != "P2") {
+        cout << "Error: This function only supports ASCII PGM (P2). Your file is: " << type << "\n";
+        return {};
+    }
+
+    string line;
+    while(file >> ws && file.peek() == '#')
+    {
+        getline(file,line);
+    }
+
+
+    file >> width >> height;
+    file >> grayvalue;
+
+    fileinfo.resize(height, Vec(width));
+
+    for(int i=0; i< height;i++)
+    {
+        for(int j=0; j< width;j++)
+        {
+            int data;
+            file >> data;
+            fileinfo[i][j] = static_cast<double>(data) / grayvalue;
+        }
+    }
+    
+    
+    file.close();
+    return fileinfo;
+}
+
