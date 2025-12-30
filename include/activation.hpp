@@ -16,4 +16,8 @@ double softplus(double x);
 
 double mse(const Vec& output, const Vec& target);
 
+double Xavier(int& in);
+
+double HeAdjusted(int& in, double alpha = 0.01);
+
 #endif
