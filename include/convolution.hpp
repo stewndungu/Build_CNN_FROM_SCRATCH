@@ -9,7 +9,10 @@ class convolution
 {
     public:
         convolution(int& num_of_Filters, int& num_of_channels, int& kernelSize, string activationType);
-
+        Weights& getWeights();
+        Vec& getBias();
+        Mat forward(const vector<Mat>& input);
+    
 
     private:
         Weights weights;

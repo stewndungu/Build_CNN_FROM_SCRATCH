@@ -35,3 +35,18 @@ using namespace std;
 
     this->bias.resize(num_of_Filters,0.0);
 }
+
+Weights& convolution::getWeights()
+{
+    return this->weights;
+}
+
+Vec& convolution::getBias()
+{
+    return this->bias;
+}
+
+Mat convolution::forward(const vector<Mat> input)
+{
+
+}
