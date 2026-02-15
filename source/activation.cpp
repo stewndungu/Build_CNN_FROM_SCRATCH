@@ -91,7 +91,7 @@ double Xavier(int& in) {
     return distribution(generator);
 }
 
-double HeAdjusted(int& in, double alpha = 0.01) {
+double HeAdjusted(double& in, double alpha = 0.01) {
     static default_random_engine generator;
     
     // 1. The formula for He Adjusted: sqrt( 2 / ((1 + a^2) * fan_in) )

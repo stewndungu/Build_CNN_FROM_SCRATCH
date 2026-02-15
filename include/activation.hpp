@@ -18,6 +18,6 @@ double mse(const Vec& output, const Vec& target);
 
 double Xavier(int& in);
 
-double HeAdjusted(int& in, double alpha = 0.01);
+double HeAdjusted(double& in, double alpha = 0.01);
 
 #endif
