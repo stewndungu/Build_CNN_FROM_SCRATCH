@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include "include/nn.hpp"
-#include <vector>
 #include <iostream>
 #include <algorithm> 
 #include <random>
