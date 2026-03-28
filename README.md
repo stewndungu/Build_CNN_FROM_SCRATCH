@@ -36,7 +36,7 @@ A beginner trial to make a small convolutional neural network from scratch
         To fix the Bias, we simply sum up all the values in the Cleaned Error Map ,because the bias touched every pixel equally.
 
         Finally, to tell the previous layer how much it messed up, NOW we use the kernel weights. We flip the kernels 180 degrees and convolve them with the Cleaned Error Map. This creates the new error map for the layer before us.
-- Build Max pooling (2/16/26 -)
+- Build Max pooling (2/16/26 - 3/28/26)
     - Forward:
         - The high level idea of max pooling is taking the finished feature map and allowing a smaller matrix window to glide over it. The window will take the maximum of the values it is over and put them in a new matrix. This matrix will be smaller than the feature map. All in all, summarizing what and where the features are. Here are the reasons why it supposed to be this way
             -Dimensionality & noise reduction: If we try to give a neural network a big image or frame, it would take soo long and the computational cost would be heavy. So by doing max pooling, you are reducing how many actual pixels are going to be sent to the neural network. Because we are taking the maximum value of a smaller area, we are getting the meat of the info and not the background values and noise

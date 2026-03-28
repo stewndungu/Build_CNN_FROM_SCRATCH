@@ -4,6 +4,11 @@
 
 using namespace std;
 
+Maxpool::Maxpool(int pool_size,int stride)
+{
+   this->pool_size = pool_size;
+   this->stride = stride;
+}
 Maxpool::vector<Mat> forward(const vector<Mat>& input)
 {
    //get the input dimensions
