@@ -12,7 +12,7 @@ Maxpool::vector<Mat> forward(const vector<Mat>& input)
         {
             for(int column = 0 ;column< input[i][row].size();column + stride)
             {
-                int max =0;
+                double max =0;
                 int max_row=0;
                 int max_column=0;
 
