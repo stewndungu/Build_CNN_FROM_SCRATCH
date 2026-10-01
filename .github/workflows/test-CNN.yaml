@@ -1,0 +1,4 @@
+name: test CNN
+on:
+jobs:
+    runs-on: ubuntu-latest
