@@ -19,7 +19,9 @@ jobs:
             - name: Run test
               run: |
                   echo "Starting the CNN Test"
+                  chmod +x ./build/BUILD_CNN_FROM_SCRATCH
                   echo trained_xor_model.txt | ./build/BUILD_CNN_FROM_SCRATCH
+                  echo "Finished the CNN Test"
 
               
               
