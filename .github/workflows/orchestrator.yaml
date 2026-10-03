@@ -8,4 +8,5 @@ jobs:
     uses: ./.github/workflows/build-CNN.yaml
 
   test-cnn:
+    needs: build-file
     uses: ./.github/workflows/test-CNN.yaml
