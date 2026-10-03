@@ -9,6 +9,13 @@ jobs:
             - name: Checkout Repository
               uses: actions/checkout@v4
 
+        # DOWNLOAD: Grabs the binary from GitHub's storage
+            - name: Retrieve Compiled Binary
+              uses: actions/download-artifact@v4
+              with:
+                  name: cnn-binary
+                  path: build/
+                  
             - name: Run test
               run: |
                   echo "Starting the CNN Test"
