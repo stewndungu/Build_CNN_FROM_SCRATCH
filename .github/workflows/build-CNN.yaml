@@ -14,5 +14,12 @@ jobs:
         mkdir build
         cmake -S . -B build
         cmake --build build
+        
+# UPLOAD: Saves the binary to GitHub's storage
+    - name: Save Compiled Binary
+      uses: actions/upload-artifact@v4
+      with:
+          name: cnn-binary
+          path: build/BUILD_CNN_FROM_SCRATCH
           
     
