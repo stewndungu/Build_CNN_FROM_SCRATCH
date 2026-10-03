@@ -1,4 +1,20 @@
 name: test CNN
 on:
+    push:
+        branches:
+            - mainA
+
+
 jobs:
-    runs-on: ubuntu-latest
+    test-CNN:
+        runs-on: ubuntu-latest
+        if: github.event.workflow_run.conclusion == 'success'
+
+        steps:
+            - name: Checkout Repository
+              uses: actions/checkout@4
+
+            - name: Run test
+              run: echo "Starting the CNN Test"
+              
+              
