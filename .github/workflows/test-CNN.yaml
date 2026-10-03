@@ -15,6 +15,9 @@ jobs:
               uses: actions/checkout@4
 
             - name: Run test
-              run: echo "Starting the CNN Test"
+              run: |
+                  echo "Starting the CNN Test"
+                  echo trained_xor_model.txt | ./build/BUILD_CNN_FROM_SCRATCH
+
               
               
