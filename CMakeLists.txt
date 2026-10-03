@@ -11,7 +11,7 @@ add_executable(BUILD_CNN_FROM_SCRATCH
         source/nn.cpp  
         source/convolution.cpp
         source/maxpool.cpp
-        source/flatten.hpp
+        source/flatten.cpp
         )
 set_property(TARGET BUILD_CNN_FROM_SCRATCH PROPERTY CXX_STANDARD 20)
 
