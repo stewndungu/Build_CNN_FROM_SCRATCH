@@ -77,7 +77,7 @@ if (!nn.load(filename)) {
 };
 
     // A prediction counts as 1 if it is at or above this value, otherwise 0
-    const double THRESHOLD = 0.3;
+    const double THRESHOLD = 0.5;
     int failures = 0;
 
     std::cout << "\nTesting Results:" << std::endl;
