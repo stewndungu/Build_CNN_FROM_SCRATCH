@@ -91,15 +91,14 @@ D.summary();
     {
         cout<<"Please enter the filename?"<<"\n";
         cin >> filename;
-        nn.load(filename);
+        if (!nn.load(filename))
+        {
+            cout << "Could not load " << filename << ". Exiting.\n";
+            return 1;
+        }
         cout<< "Please enter the adjusted epochs? Enter a number"<<"\n";
         cin >> epochs;
     }
-    cout << "What is your batch-size?enter a number\n";
-    cin >> BATCH_SIZE;
-    
-
-   
 
     // ---------------------------------------------------------
     // 2. DEFINE TRAINING DATA (XOR)
@@ -149,6 +148,22 @@ D.summary();
     {0.0}, {1.0}, {1.0}, {0.0}
 };
 
+    // Batch size must be a number from 1 to the dataset size.
+    // 0 would divide by zero below, and anything larger gives 0 batches (no training).
+    int max_batch = inputs.size();
+    cout << "What is your batch-size? Enter a number from 1 to " << max_batch << "\n";
+    while (!(cin >> BATCH_SIZE) || BATCH_SIZE < 1 || BATCH_SIZE > max_batch)
+    {
+        if (cin.eof())
+        {
+            cout << "No batch-size given. Exiting.\n";
+            return 1;
+        }
+        cin.clear();                                          // reset the error flag from non-number input
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');  // throw away the bad line
+        cout << "Invalid batch-size. Enter a number from 1 to " << max_batch << "\n";
+    }
+
      vector<int> indices(inputs.size());
      iota(indices.begin(),indices.end(),0);
      default_random_engine rng(time(NULL));
@@ -181,7 +196,7 @@ D.summary();
          for(int batch = 0; batch < num_batch; batch++)
          {
             nn.clear_gradients();
-            for(size_t j =0; j < BATCH_SIZE; j++)
+            for(int j =0; j < BATCH_SIZE; j++)
             {
                 int current_index = indices[batch * BATCH_SIZE + j ];
 

@@ -1,6 +1,6 @@
 #include <iostream>
 #include "maxpool.hpp"
-
+#include <limits>
 
 using namespace std;
 
@@ -9,11 +9,11 @@ Maxpool::Maxpool(int pool_size,int stride)
    this->pool_size = pool_size;
    this->stride = stride;
 }
-Maxpool::vector<Mat> forward(const vector<Mat>& input)
+vector<Mat> Maxpool::forward(const vector<Mat>& input)
 {
    //get the input dimensions
    int num_channels = input.size();
-   this->last_row_size = input[0].size()
+   this->last_row_size = input[0].size();
    this->last_col_size = input[0][0].size();
 
    //calculate the dimensions for the output matrix
@@ -21,7 +21,7 @@ Maxpool::vector<Mat> forward(const vector<Mat>& input)
    int out_col = this->last_col_size / stride;
 
    //Resize maxcoords to match shape of the intialized output
-   vector<Mat> output(num_channels, Mat(out_row. Vec(out_col,0.0)));
+   vector<Mat> output(num_channels, Mat(out_row, Vec(out_col,0.0)));
    this->maxcoords.assign(num_channels,vector<vector<pair<int,int>>>(out_row, vector<pair<int,int>>(out_col)));
 
    for(int channel = 0; channel < num_channels; channel++)
@@ -52,7 +52,7 @@ Maxpool::vector<Mat> forward(const vector<Mat>& input)
 
                   if(input[channel][current_row][current_col] > max_val)
                   {
-                     max_val = input[channel][current_row][current_col]
+                     max_val = input[channel][current_row][current_col];
                      max_r = current_row;
                      max_c = current_col;
                   }
@@ -60,14 +60,14 @@ Maxpool::vector<Mat> forward(const vector<Mat>& input)
             }
 
             output[channel][row][col] = max_val;
-            maxcoords[channel][row][col] = {max_r,max_c}
+            maxcoords[channel][row][col] = {max_r,max_c};
          }
       }
    }
 
    return output;
 }
-Maxpool::vector<Mat> backward(const vector<Mat>& output_error)
+vector<Mat> Maxpool::backward(const vector<Mat>& output_error)
 {
    //get the output_Error dimensions for channel/row/col
    int num_channels = output_error.size();
@@ -88,7 +88,7 @@ Maxpool::vector<Mat> backward(const vector<Mat>& output_error)
             int orig_col = this->maxcoords[c][r][col].second;
 
             // put the output_error values in the input_gradient
-            input_gradient[c][orig_row][orig_col] = output_error[c][r][col]
+            input_gradient[c][orig_row][orig_col] = output_error[c][r][col];
          }
       }
    }

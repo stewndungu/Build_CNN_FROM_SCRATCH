@@ -3,6 +3,8 @@
 #include <string>
 #include "../include/activation.hpp"
 #include <fstream>
+#include <cmath>
+#include <iomanip>
 using namespace std;
 
 
@@ -75,6 +77,13 @@ void NeuralNetwork::backward(const Vec& x, const Vec& target, double lr){
             // ReLU derivative is 1 if a > 0, else 0.1 not 0.o to avoid dying ReLu problem
             derivative = derivativeRelu(a);
         } 
+        else if (activation_type == "tanh_act") {
+            derivative = derivatieTanh_act(a);
+        }
+        else if (activation_type == "softplus") {
+            // softplus'(z) = sigmoid(z), and since a = log(1 + e^z), sigmoid(z) = 1 - e^(-a)
+            derivative = 1.0 - exp(-a);
+        }
         
         // 3. Store dZ
         dZ_output.push_back(error * derivative);
@@ -126,6 +135,10 @@ void NeuralNetwork::backward(const Vec& x, const Vec& target, double lr){
                 derivative = derivativeSigmoid(a);
             } else if (current_layer.getActivation() == "ReLu") {
                 derivative = derivativeRelu (a);
+            } else if (current_layer.getActivation() == "tanh_act") {
+                derivative = derivatieTanh_act(a);
+            } else if (current_layer.getActivation() == "softplus") {
+                derivative = 1.0 - exp(-a);
             }
             
             dZ_hidden.push_back(error_sum * derivative);
@@ -209,7 +222,8 @@ void NeuralNetwork::save(const std::string& filename) const {
         return;
     }
 
-   
+    // 17 significant digits lets every double round-trip exactly (the default is only 6)
+    file << std::setprecision(17);
 
     // 1. Save the Network Topology Size
     file <<this->Layers.size() << "\n"; 
@@ -232,114 +246,97 @@ void NeuralNetwork::save(const std::string& filename) const {
         }
     }
     file.close();
+
+    if (file.fail()) {
+        std::cerr << "Error: Writing to " << filename << " failed." << std::endl;
+        return;
+    }
     std::cout << "Model saved to " << filename << std::endl;
 }
 
 // =========================================================
 // NEW: LOAD FUNCTION
 // =========================================================
-void NeuralNetwork::load(const std::string& filename) {
+// Reads the whole file into a temporary vector first. this->Layers is only
+// replaced if every read succeeded, so a bad file leaves the network untouched.
+bool NeuralNetwork::load(const std::string& filename) {
     std::ifstream file(filename);
     if (!file.is_open()) {
         std::cerr << "Error: Could not open file " << filename << " for loading." << std::endl;
-        return;
+        return false;
     }
-
-    /*
-    // CRITICAL: We assume the NeuralNetwork object has ALREADY been constructed 
-    // with the correct topology before calling load.
-
-    int layer_count_from_file;
-    if (!(file >> layer_count_from_file)) {
-        std::cerr << "Error: Failed to read layer count." << std::endl;
-        return;
-    }
-    
-    // Basic validation to prevent crashes
-    if (layer_count_from_file != Layers.size()) {
-        std::cerr << "Error: Loaded file has " << layer_count_from_file 
-                  << " layers, but current network has " << Layers.size() 
-                  << " layers. Cannot load." << std::endl;
-        file.close();
-        return;
-    }
-
-    for (size_t i = 0; i < Layers.size(); ++i) {
-        Layer& layer = Layers[i];
-        vector<Neuron>& neurons = layer.getNeurons();
-        
-        int neuron_count_from_file;
-        std::string activation_type_from_file;
-        
-        // Read the layer metadata (and discard/validate)
-        if (!(file >> neuron_count_from_file >> activation_type_from_file)) {  return; }
-
-        for (size_t j = 0; j < neurons.size(); ++j) {
-            Neuron& neuron = neurons[j];
-            
-            // 1. Load Bias
-            double bias_value;
-            if (!(file >> bias_value)) {  return; }
-            neuron.setBias(bias_value);
-            
-            // 2. Load Weights
-            int weight_count;
-            if (!(file >> weight_count)) {  return; }
-            
-            for (int k = 0; k < weight_count; ++k) {
-                double weight_value;
-                if (!(file >> weight_value)) {  return; }
-                neuron.setWeights(k, weight_value);
-            }
-        }
-    }
-    */
 
     int file_layer_count;
-    file >> file_layer_count;
+    if (!(file >> file_layer_count) || file_layer_count <= 0) {
+        std::cerr << "Error: " << filename << " does not start with a valid layer count." << std::endl;
+        return false;
+    }
 
-    this->Layers.clear(); // Clear the old structure entirely
+    vector<Layer> loaded_layers;
+    loaded_layers.reserve(file_layer_count);
 
     for (int i = 0; i < file_layer_count; ++i) {
         int neuron_count;
         string act_type;
-        file >> neuron_count >> act_type;
+        if (!(file >> neuron_count >> act_type) || neuron_count <= 0) {
+            std::cerr << "Error: Bad header for layer " << i << " in " << filename << "." << std::endl;
+            return false;
+        }
 
         // 1. We peek at the first neuron's data to see how many weights we need
         // Since we can't 'peek' easily in fstream, we store the values temporarily
         double first_bias;
         int weight_count;
-        file >> first_bias >> weight_count;
+        if (!(file >> first_bias >> weight_count) || weight_count <= 0) {
+            std::cerr << "Error: Bad data for layer " << i << ", neuron 0 in " << filename << "." << std::endl;
+            return false;
+        }
+
+        // Each layer's inputs must equal the previous layer's neuron count
+        if (i > 0) {
+            int prev_neurons = loaded_layers.back().getNeurons().size();
+            if (weight_count != prev_neurons) {
+                std::cerr << "Error: Layer " << i << " expects " << weight_count
+                          << " inputs but layer " << i - 1 << " has " << prev_neurons
+                          << " neurons." << std::endl;
+                return false;
+            }
+        }
 
         // 2. Now we can create the layer because we know the weight_count (input_size)
         Layer new_layer(weight_count, neuron_count, act_type);
         auto& real_neurons = new_layer.getNeurons();
 
-        // 3. Set the data for the first neuron we already read
-        real_neurons[0].setBias(first_bias);
-        for (int k = 0; k < weight_count; ++k) {
-            double w;
-            file >> w;
-            real_neurons[0].setWeights(k, w);
-        }
-
-        // 4. Fill in the rest of the neurons for this layer
-        for (int j = 1; j < neuron_count; ++j) {
-            double b;
-            int w_count_check;
-            file >> b >> w_count_check;
+        // 3. Fill in every neuron. Neuron 0's bias and weight count were already read above.
+        for (int j = 0; j < neuron_count; ++j) {
+            double b = first_bias;
+            if (j > 0) {
+                int w_count_check;
+                if (!(file >> b >> w_count_check) || w_count_check != weight_count) {
+                    std::cerr << "Error: Bad data for layer " << i << ", neuron " << j
+                              << " in " << filename << "." << std::endl;
+                    return false;
+                }
+            }
             real_neurons[j].setBias(b);
+
             for (int k = 0; k < weight_count; ++k) {
                 double w;
-                file >> w;
+                if (!(file >> w)) {
+                    std::cerr << "Error: " << filename << " ended early (layer " << i
+                              << ", neuron " << j << ", weight " << k << ")." << std::endl;
+                    return false;
+                }
                 real_neurons[j].setWeights(k, w);
             }
         }
-        this->Layers.push_back(new_layer);
+        loaded_layers.push_back(new_layer);
     }
 
-    file.close();
+    // Everything read cleanly, so it is now safe to replace the network
+    this->Layers = std::move(loaded_layers);
     std::cout << "Model loaded from " << filename << std::endl;
+    return true;
 }
 
 

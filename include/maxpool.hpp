@@ -1,4 +1,4 @@
-#ifdef MAXPOOL_HPP
+#ifndef MAXPOOL_HPP
 #define MAXPOOL_HPP
 #include "matrix.hpp"
 #include <utility>
@@ -24,7 +24,7 @@ class Maxpool
 
         // A 3D vector holding pairs of (Row, Col)
         vector<vector<vector<pair<int,int>>>>maxcoords;
-}
+};
 
 
 #endif

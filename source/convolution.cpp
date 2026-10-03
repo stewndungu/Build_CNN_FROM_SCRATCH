@@ -1,5 +1,5 @@
 #include <iostream>
-#include "convolution.hpp"
+#include "../include/convolution.hpp"
 
 using namespace std;
  convolution::convolution (int& num_of_Filters, int& num_of_channels, int& kernelSize, string activationType)
@@ -8,7 +8,7 @@ using namespace std;
 
     this->activationType = activationType;
 
-    int in = num_of_channels * kernelSize * kernelSize;
+    double in = num_of_channels * kernelSize * kernelSize;
     
     for(int filter= 0; filter < num_of_Filters; filter++)
     {
@@ -86,16 +86,18 @@ vector<Mat> convolution::forward(const vector<Mat>& input)
                 // FIX: if-else instead of switch for strings
                 if (this->activationType == "ReLu") {
                     sum = ReLu(sum);
-                } else if (this->activationType == "Sigmoid") {
+                } else if (this->activationType == "sigmoid") {
                     sum = sigmoid(sum);
                 } else if (this->activationType == "tanh_act") {
                     sum = tanh_act(sum);
                 } else {
                     sum = sigmoid(sum); // Default
                 }
+
+                output[f][r][c] = sum;
             }
                
-            output[f][r][c] = sum;
+            
         }
     }
 
@@ -104,7 +106,7 @@ vector<Mat> convolution::forward(const vector<Mat>& input)
 }
 
 //Needed help heavily on AI for this part
-vector<Mat> backward(const vector<Mat>& output_error, double learning_rate)
+vector<Mat> convolution::backward(const vector<Mat>& output_error, double learning_rate)
 {
     // 1. Dimensions
     int num_filters = this->weights.size();
@@ -133,6 +135,7 @@ vector<Mat> backward(const vector<Mat>& output_error, double learning_rate)
         // --- STEP 1: Activation Derivative ("Clean" the error) ---
         // We calculate the gradient of the loss with respect to the pre-activation sum (delta)
         Mat delta(out_row, Vec(out_col, 0.0));
+        double deriv = 1.0; // To store the derivative value
         for (int r = 0; r < out_row; r++) {
             for (int c = 0; c < out_col; c++) {
                 double val = this->last_output[f][r][c];
@@ -141,7 +144,7 @@ vector<Mat> backward(const vector<Mat>& output_error, double learning_rate)
                 if (this->activationType == "ReLU" || this->activationType == "ReLu") {
                     deriv = derivativeRelu(val);
                 } 
-                else if (this->activationType == "Sigmoid") {
+                else if (this->activationType == "sigmoid") {
                     deriv = derivativeSigmoid(val);
                 }
                 else if (this->activationType == "tanh_act") {
@@ -152,6 +155,7 @@ vector<Mat> backward(const vector<Mat>& output_error, double learning_rate)
         }
 
         // --- STEP 2: Bias Gradient (Sum of Deltas) ---
+        delta[r][c]= output_error[f][r][c] * deriv; // Element-wise multiplication
         for (int r = 0; r < out_row; r++) {
             for (int c = 0; c < out_col; c++) {
                 bias_gradients[f] += delta[r][c];

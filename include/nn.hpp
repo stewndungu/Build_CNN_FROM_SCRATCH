@@ -9,7 +9,7 @@ class NeuralNetwork
         Vec forward( Vec& x);
         void backward(const Vec& x, const Vec& target, double lr);
         void save(const std::string& filename) const;
-        void load(const std::string& filename);
+        bool load(const std::string& filename);
 
         void clear_gradients();
         void update_gradients(double batch_size, double lr);

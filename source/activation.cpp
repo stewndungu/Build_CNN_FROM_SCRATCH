@@ -21,7 +21,7 @@ double derivativeSigmoid(double x)
 
 double ReLu(double x)
 {
-    return max(0.0, x);
+    return (x > 0.0) ? x : 0.1 * x;
 }
 
 double derivativeRelu (double x)
@@ -78,7 +78,7 @@ Vec mse_derivative(const Vec& output, const Vec& target)
     return gradient;
 }
 
-double Xavier(int& in) {
+double Xavier(double& in) {
     // 1. Setup the random engine
     static default_random_engine generator;
     
@@ -91,7 +91,7 @@ double Xavier(int& in) {
     return distribution(generator);
 }
 
-double HeAdjusted(double& in, double alpha = 0.01) {
+double HeAdjusted(double& in, double alpha) {
     static default_random_engine generator;
     
     // 1. The formula for He Adjusted: sqrt( 2 / ((1 + a^2) * fan_in) )

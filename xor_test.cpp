@@ -18,7 +18,10 @@ NeuralNetwork nn(dummy_topo, "sigmoid", "ReLu");
 
 // This will wipe the 2-1 structure and replace it with 
 // the 2-700-1 structure found in your text file.
-nn.load(filename);
+if (!nn.load(filename)) {
+    cout << "Could not load " << filename << ". Exiting.\n";
+    return 1;
+}
 
   
 

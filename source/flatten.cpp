@@ -1,3 +1,5 @@
+#include "../include/flatten.hpp"
+
 Vec Flatten::forward(const vector<Mat>& input) {
     // Save the dimensions so we can rebuild the box later
     this->num_channels = input.size();
