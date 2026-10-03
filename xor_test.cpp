@@ -76,17 +76,45 @@ if (!nn.load(filename)) {
     {0.0}, {1.0}, {1.0}, {0.0}
 };
 
+    // A prediction counts as 1 if it is at or above this value, otherwise 0
+    const double THRESHOLD = 0.3;
+    int failures = 0;
+
     std::cout << "\nTesting Results:" << std::endl;
-    
+
     for (size_t j = 0; j < inputs.size(); j++) {
-        Vec prediction = nn.forward(inputs[j]);
-        
-        std::cout << "Input: " << inputs[j][0] << ", " << inputs[j][1] 
+        Vec prediction;
+        try {
+            prediction = nn.forward(inputs[j]);
+        } catch (const std::exception& e) {
+            // The file loaded, but the network is the wrong shape for 2 XOR inputs
+            std::cout << "FAIL: model cannot take 2 inputs (" << e.what() << ")\n";
+            return 1;
+        }
+
+        if (prediction.size() != 1) {
+            std::cout << "FAIL: model has " << prediction.size() << " outputs, expected 1\n";
+            return 1;
+        }
+
+        double predicted_class = (prediction[0] >= THRESHOLD) ? 1.0 : 0.0;
+        bool correct = (predicted_class == targets[j][0]);
+        if (!correct) {
+            failures++;
+        }
+
+        std::cout << "Input: " << inputs[j][0] << ", " << inputs[j][1]
                   << " | Target: " << targets[j][0]
-                  << " | Prediction: " << prediction[0] << std::endl;
+                  << " | Prediction: " << prediction[0]
+                  << (correct ? " | PASS" : " | FAIL") << std::endl;
     }
 
+    std::cout << "\n" << inputs.size() - failures << "/" << inputs.size() << " correct\n";
+    if (failures > 0) {
+        std::cout << "XOR TEST FAILED\n";
+        return 1;
+    }
 
-
+    std::cout << "XOR TEST PASSED\n";
     return 0;
 }

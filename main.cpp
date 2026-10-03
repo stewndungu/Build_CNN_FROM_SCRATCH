@@ -9,6 +9,7 @@ using namespace std;
 int main()
 {
     //Testing phases during the building of the neuralnetwork. You can delete these
+    
     /*
     Vec myVec;
     Vec myTec;
