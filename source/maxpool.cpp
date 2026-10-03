@@ -1,5 +1,5 @@
 #include <iostream>
-#include "maxpool.hpp"
+#include "../include/maxpool.hpp"
 #include <limits>
 
 using namespace std;

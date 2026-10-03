@@ -151,11 +151,11 @@ vector<Mat> convolution::backward(const vector<Mat>& output_error, double learni
                     // Note: using the name from your provided .hpp typo
                     deriv = derivatieTanh_act(val); 
                 }
+                delta[r][c] = output_error[f][r][c] * deriv; // Element-wise multiplication
             }
         }
 
         // --- STEP 2: Bias Gradient (Sum of Deltas) ---
-        delta[r][c]= output_error[f][r][c] * deriv; // Element-wise multiplication
         for (int r = 0; r < out_row; r++) {
             for (int c = 0; c < out_col; c++) {
                 bias_gradients[f] += delta[r][c];

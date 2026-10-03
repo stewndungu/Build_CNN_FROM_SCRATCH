@@ -78,7 +78,7 @@ Vec mse_derivative(const Vec& output, const Vec& target)
     return gradient;
 }
 
-double Xavier(double& in) {
+double Xavier(double in) {
     // 1. Setup the random engine
     static default_random_engine generator;
     
@@ -91,7 +91,7 @@ double Xavier(double& in) {
     return distribution(generator);
 }
 
-double HeAdjusted(double& in, double alpha) {
+double HeAdjusted(double in, double alpha) {
     static default_random_engine generator;
     
     // 1. The formula for He Adjusted: sqrt( 2 / ((1 + a^2) * fan_in) )
