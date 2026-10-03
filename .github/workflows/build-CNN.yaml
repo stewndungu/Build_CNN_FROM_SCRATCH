@@ -1,0 +1,17 @@
+on:
+  push:
+    branches:
+      - main
+      
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Build the build file
+      run: |
+        rm -rf build
+        mkdir build
+        cmake -S . -B build
+        cmake --build build
+          
+    
