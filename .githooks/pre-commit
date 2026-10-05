@@ -9,12 +9,14 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
   
+echo " ===========Files are linked Successfully"================
+
 cmake --build build
 
 if [ $? -ne 0 ]; then
     echo " ----> SECOND BUILD FAILED! Commit aborted"
     exit 1
 fi
-
+echo " =========== Build passed                "================
 echo " ===========All tests passed. Creating commit"================
 exit 0
