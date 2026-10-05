@@ -1,4 +1,4 @@
-echo == " Starting the pre-commit  Build test"
+echo ===========" Starting the pre-commit Build test"================
 
 rm -rf build
 mkdir build
@@ -16,5 +16,5 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-echo " All tests passed. Creating commit"
+echo " ===========All tests passed. Creating commit"================
 exit 0
