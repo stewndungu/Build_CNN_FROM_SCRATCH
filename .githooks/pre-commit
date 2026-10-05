@@ -1,0 +1,20 @@
+echo == " Starting the pre-commit  Build test"
+
+rm -rf build
+mkdir build
+cmake -S . -B build
+
+if [ $? -ne 0 ]; then
+    echo " ----> FIRST BUILD FAILED! Commit aborted"
+    exit 1
+fi
+  
+cmake --build build
+
+if [ $? -ne 0 ]; then
+    echo " ----> SECOND BUILD FAILED! Commit aborted"
+    exit 1
+fi
+
+echo " All tests passed. Creating commit"
+exit 0
